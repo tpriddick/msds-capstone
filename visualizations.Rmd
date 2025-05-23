@@ -1,0 +1,107 @@
+---
+title: "capstone vizzes"
+author: "Tyler Riddick"
+date: "2024-08-13"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+library(tidyverse)
+library(ggplot2)
+library(RColorBrewer)
+install.packages("wesanderson")
+# Load
+library(wesanderson)
+library(colorspace)
+```
+
+```{r}
+logRes = read.csv('logisticResults.csv')
+```
+```{r}
+logRes
+```
+
+```{r}
+entity_order = c('GameStop','Wingstop','Nvidia','Dogecoin','General')
+
+
+logPlot = logRes %>%
+  ggplot(aes(x=day,y=accuracy,fill=factor(entity,levels=entity_order)))+
+  geom_bar(position='dodge',stat='identity',color='black')+
+  geom_hline(yintercept = 0.5, linetype = 'twodash', color='black')+
+  labs(title = 'Logistic Regression Accuracy by Day',
+       x = 'Day',
+       y = 'Prediction Accuracy',
+       fill = 'Entity') +
+  scale_fill_viridis_d(option = "cividis")+
+  theme(axis.title = element_text(size=20), 
+        plot.title = element_text(size=24),
+        axis.text = element_text(size=18), 
+        legend.text = element_text(size=16),
+        legend.title = element_text(size=20))+
+  scale_y_continuous(breaks = seq(0,1, by=0.1),limits = c(0,0.7))
+logPlot
+ggsave('logplot.png',logPlot,height=7.5,width=13.5)
+```
+```{r}
+treeRes = read.csv('treeResults.csv')
+
+treePlot = treeRes %>%
+  ggplot(aes(x=day,y=accuracy,fill=factor(entity,levels=entity_order)))+
+  geom_bar(position='dodge',stat='identity',color='black')+
+  geom_hline(yintercept = 0.5, linetype = 'twodash', color='black')+
+  labs(title = 'Decision Tree Accuracy by Day',
+       x = 'Day',
+       y = 'Prediction Accuracy',
+       fill = 'Entity') +
+  scale_fill_viridis_d(option = "cividis")+
+  theme(axis.title = element_text(size=20), 
+        plot.title = element_text(size=24),
+        axis.text = element_text(size=18), 
+        legend.text = element_text(size=16),
+        legend.title = element_text(size=20))+
+  scale_y_continuous(breaks = seq(0,1, by=0.1),limits = c(0,0.7))
+treePlot
+ggsave('treeplot.png',treePlot,height=7.5,width=13.5)
+```
+
+```{r}
+genLog = logRes %>%
+  filter(entity == 'General') %>%
+  mutate(type = 'Logistic')
+
+genTree = treeRes %>%
+  filter(entity == 'General') %>%
+  mutate(type = 'Decision Tree')
+```
+
+```{r}
+genModels = rbind(genLog,genTree)
+genModels
+```
+```{r}
+genplot = genModels %>%
+  ggplot(aes(x=day,y=accuracy,fill=factor(type,levels=c('Logistic','Decision Tree')))) +
+  geom_bar(position='dodge',stat='identity',color='black')+
+  geom_hline(yintercept = 0.5, linetype = 'dashed', color='black')+
+  labs(title = 'Accuracy Comparion: Logistic Regression vs Decision Tree',
+       x = 'Day',
+       y = 'Accuracy',
+       fill = 'Model')+
+  scale_fill_viridis_d(option='cividis')+
+  theme(axis.title = element_text(size=20), 
+        plot.title = element_text(size=24),
+        axis.text = element_text(size=18), 
+        legend.text = element_text(size=16),
+        legend.title = element_text(size=20))+
+  scale_y_continuous(breaks = seq(0,1, by=0.1),limits = c(0,0.57))
+genplot
+ggsave('genplot.png',genplot,height=7.5,width=13.5)
+```
+```{r}
+display.brewer.all()
+```
+
+
+

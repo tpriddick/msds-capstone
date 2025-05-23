@@ -1,0 +1,12 @@
+﻿numpy
+pandas
+selenium
+sqlalchemy
+psycopg2-binary
+datetime
+fake_useragent
+xvfbwrapper
+pyvirtualdisplay
+twscrape
+asyncio
+random

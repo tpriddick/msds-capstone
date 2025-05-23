@@ -1,0 +1,10 @@
+name: dashboard
+title:
+username: tpgomez
+account: tpgomez
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 12450296
+bundleId: 8980116
+url: https://tpgomez.shinyapps.io/dashboard/
+version: 1
