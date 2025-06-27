@@ -50,7 +50,7 @@ Understanding the correlation between public sentiment and market performance ha
 ## Team
 
 - Tyler Gomez Riddick ([LinkedIn](https://www.linkedin.com/in/tyler-gomez-riddick/), [Portfolio](https://www.datascienceportfol.io/tylergomezriddick))
-- Aryan Bhardwaj
+- Aryan Bhardwaj ([LinkedIn](https://www.linkedin.com/in/aaryanb/))
 
 ---
 
